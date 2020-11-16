@@ -81,6 +81,34 @@ function app() {
         addingNewTeamMember();
       });
   }
+  //asking to add another person
+  function addingNewTeamMember() {
+    inquirer
+      .prompt([
+        {
+          type: "checkbox",
+          name: "selectingEmployee",
+          message: "which employee to add?",
+          choices: ["engineer", "intern", "no more employees to add"],
+        },
+      ])
+      .then((response) => {
+        const role = response.selectemployee;
+        if (role == "engineer") {
+          getEngineer();
+        } else if (role == "intern") {
+          getIntern();
+        } else if (role == "no more employees to add") {
+          renderTeam();
+        }
+      });
+  }
+  addingNewTeamMember();
+
+  function renderTeam() {
+    fs.writeFileSync(outputPath, render(teamMember), "utf-8");
+  }
+  app();
 }
 
 // Write code to use inquirer to gather information about the development team members,
@@ -104,4 +132,3 @@ function app() {
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
