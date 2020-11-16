@@ -11,28 +11,75 @@ const render = require("./lib/htmlRenderer");
 const teamMember = [];
 function app() {
   function getManger() {
-    inquirer.prompt([
-      {
-        type: "input",
-        name: "mangerName",
-        message: "What is your manger's name?",
-      },
-      {
-        type: "input",
-        name: "mangerId",
-        message: "What is your manger's Id?",
-      },
-      {
-        type: "input",
-        name: "mangerEmail",
-        message: "What is your manger's Email?",
-      },
-      {
-        type: "input",
-        name: "OfficeNumber",
-        message: "What is your office number?",
-      },
-    ]);
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "mangerName",
+          message: "What is your manger's name?",
+        },
+        {
+          type: "input",
+          name: "mangerId",
+          message: "What is your manger's Id?",
+        },
+        {
+          type: "input",
+          name: "mangerEmail",
+          message: "What is your manger's Email?",
+        },
+        {
+          type: "input",
+          name: "OfficeNumber",
+          message: "What is your office number?",
+        },
+      ])
+      .then((response) => {
+        const manger = new Manager(
+          response.mangerName,
+          response.mangerId,
+          response.mangerEmail,
+          response.officeNumber
+        );
+        teamMember.push(manger);
+        addingNewTeamMember();
+      });
+  }
+
+  function getIntern() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "InternName",
+          message: "What is Intern's name?",
+        },
+        {
+          type: "input",
+          name: "internId",
+          message: "What is your Intern's Id?",
+        },
+        {
+          type: "input",
+          name: "internEmail",
+          message: "What is your Intern's Email?",
+        },
+        {
+          type: "input",
+          name: "school",
+          message: "What school did intern attend?",
+        },
+      ])
+      .then((response) => {
+        const Intern = new Intern(
+          response.internName,
+          response.internId,
+          response.internEmail,
+          response.school
+        );
+        teamMember.push(intern);
+        addingNewTeamMember();
+      });
   }
 }
 
