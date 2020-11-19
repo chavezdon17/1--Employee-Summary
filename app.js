@@ -30,18 +30,53 @@ function app() {
         },
         {
           type: "input",
-          name: "OfficeNumber",
+          name: "officeNumber",
           message: "What is your office number?",
         },
       ])
       .then((response) => {
-        const manger = new Manager(
+        const getManger = new Manager(
           response.mangerName,
           response.mangerId,
           response.mangerEmail,
           response.officeNumber
         );
-        teamMember.push(manger);
+        teamMember.push(getManger);
+        addingNewTeamMember();
+      });
+  }
+  function getEngineer() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "engineerName",
+          message: "What is Engineer's name?",
+        },
+        {
+          type: "input",
+          name: "engineerId",
+          message: "What is your Engineer's Id?",
+        },
+        {
+          type: "input",
+          name: "engineerEmail",
+          message: "What is your Engineer's Email?",
+        },
+        {
+          type: "input",
+          name: "github",
+          message: "What is your Github page?",
+        },
+      ])
+      .then((response) => {
+        const engineer = new Engineer(
+          response.engineerName,
+          response.engineerId,
+          response.engineerEmail,
+          response.github
+        );
+        teamMember.push(engineer);
         addingNewTeamMember();
       });
   }
@@ -51,7 +86,7 @@ function app() {
       .prompt([
         {
           type: "input",
-          name: "InternName",
+          name: "internName",
           message: "What is Intern's name?",
         },
         {
@@ -71,7 +106,7 @@ function app() {
         },
       ])
       .then((response) => {
-        const Intern = new Intern(
+        const intern = new Intern(
           response.internName,
           response.internId,
           response.internEmail,
@@ -93,7 +128,8 @@ function app() {
         },
       ])
       .then((response) => {
-        const role = response.selectemployee;
+        const role = response.selectingEmployee;
+        console.log(role);
         if (role == "engineer") {
           getEngineer();
         } else if (role == "intern") {
@@ -103,20 +139,21 @@ function app() {
         }
       });
   }
-  addingNewTeamMember();
+  getManger();
 
   function renderTeam() {
-    fs.writeFileSync(outputPath, render(teamMember), "utf-8");
+    console.log(teamMember);
+    fs.writeFileSync(outputPath, render(teamMember));
   }
-  app();
 }
+app();
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+// generate and return a block of HTML including templated div for each employee!
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
